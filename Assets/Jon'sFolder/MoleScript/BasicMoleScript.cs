@@ -10,11 +10,13 @@ public class BasicMoleScript : Clickable
     public float timeOnScreen;
     public int pointValue;
     public int livesValue;
+    public SFX moleAudio;
 
     protected override void Start()
     {
         base.Start();
         moleAnim = GetComponent<Animator>();
+        moleAudio = GameObject.Find("SFX").GetComponent<SFX>();
     }
 
     public void Update()
@@ -35,6 +37,7 @@ public class BasicMoleScript : Clickable
                 Destroy(thisExplosion, 1.1f);
                 isHurt = true;
                 gm.UpdateScore(pointValue);
+                moleAudio.PlayHurtSound();
             }
         }
     }
