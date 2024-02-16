@@ -7,11 +7,17 @@ public class BasicMoleScript : Clickable
     public bool isHurt = false;
     public Animator moleAnim;
     public GameObject explosion;
+    public float timeOnScreen;
 
     protected override void Start()
     {
         base.Start();
         moleAnim = GetComponent<Animator>();
+    }
+
+    public void Update()
+    {
+        StartCoroutine(DestroyIfNotClicked(timeOnScreen));
     }
 
     protected override void GotClicked()
@@ -26,4 +32,14 @@ public class BasicMoleScript : Clickable
             isHurt = true;
         }
     }
+
+    IEnumerator DestroyIfNotClicked(float timeOnScreen)
+    {
+        if (!isHurt)
+        {
+            yield return new WaitForSeconds(timeOnScreen);
+            Destroy(gameObject);
+        }
+    }
+
 }
