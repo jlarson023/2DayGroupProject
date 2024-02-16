@@ -24,25 +24,31 @@ public class BasicMoleScript : Clickable
 
     protected override void GotClicked()
     {
-        if (!isHurt)
+        if (gm.gameIsActive)
         {
-            base.GotClicked();
-            moleAnim.SetBool("isHurt", isHurt);
-            GameObject thisExplosion =  Instantiate(explosion, transform.position, explosion.transform.rotation);
-            Destroy(gameObject, 1);
-            Destroy(thisExplosion, 1.1f);
-            isHurt = true;
-            gm.UpdateScore(pointValue);
+            if (!isHurt)
+            {
+                base.GotClicked();
+                moleAnim.SetBool("isHurt", isHurt);
+                GameObject thisExplosion = Instantiate(explosion, transform.position, explosion.transform.rotation);
+                Destroy(gameObject, 1);
+                Destroy(thisExplosion, 1.1f);
+                isHurt = true;
+                gm.UpdateScore(pointValue);
+            }
         }
     }
 
     IEnumerator DestroyIfNotClicked(float timeOnScreen)
     {
-        if (!isHurt)
+        if(gm.gameIsActive)
         {
-            yield return new WaitForSeconds(timeOnScreen);
-            Destroy(gameObject);
-            gm.UpdateLives(livesValue);
+            if (!isHurt)
+            {
+                yield return new WaitForSeconds(timeOnScreen);
+                Destroy(gameObject);
+                gm.UpdateLives(livesValue);
+            }
         }
     }
 

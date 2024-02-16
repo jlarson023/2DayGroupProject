@@ -9,10 +9,17 @@ public class MoleSpawner : MonoBehaviour
     private float spawnRangeX = 9.5f;
     public float delay;
 
+    public GameManager gm;
+
     // Start is called before the first frame update
     void Start()
     {
-        InvokeRepeating("SpawnMole", delay, delay);
+        //InvokeRepeating("SpawnMole", delay, delay);
+
+        if (GameObject.Find("GameManager") != null)
+        {
+            gm = GameObject.Find("GameManager").GetComponent<GameManager>();
+        }
     }
 
     private Vector2 GenerateSpawnPosition()
@@ -25,14 +32,19 @@ public class MoleSpawner : MonoBehaviour
 
     public void SpawnMole()
     {
-        int randomMole = Random.Range(0, molePrefab.Length);
+            int randomMole = Random.Range(0, molePrefab.Length);
 
-        Instantiate(molePrefab[randomMole], GenerateSpawnPosition(), molePrefab[randomMole].transform.rotation);
+            Instantiate(molePrefab[randomMole], GenerateSpawnPosition(), molePrefab[randomMole].transform.rotation);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        //Start mole spawning
+        if (gm.gameIsActive && !gm.startCalled)
+        {
+            InvokeRepeating("SpawnMole", delay, delay);
+            gm.startCalled = true;
+        }
     }
 }
