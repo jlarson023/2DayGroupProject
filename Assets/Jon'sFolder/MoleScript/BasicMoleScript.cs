@@ -8,6 +8,8 @@ public class BasicMoleScript : Clickable
     public Animator moleAnim;
     public GameObject explosion;
     public float timeOnScreen;
+    public int pointValue;
+    public int livesValue;
 
     protected override void Start()
     {
@@ -30,6 +32,7 @@ public class BasicMoleScript : Clickable
             Destroy(gameObject, 1);
             Destroy(thisExplosion, 1.1f);
             isHurt = true;
+            gm.UpdateScore(pointValue);
         }
     }
 
@@ -39,6 +42,7 @@ public class BasicMoleScript : Clickable
         {
             yield return new WaitForSeconds(timeOnScreen);
             Destroy(gameObject);
+            gm.UpdateLives(livesValue);
         }
     }
 

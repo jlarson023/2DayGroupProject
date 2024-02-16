@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MoleSpawner : MonoBehaviour
 {
-    public GameObject molePrefab;
+    public GameObject[] molePrefab;
     private float spawnRangeY = 4.5f;
     private float spawnRangeX = 9.5f;
     public float delay;
@@ -25,7 +25,9 @@ public class MoleSpawner : MonoBehaviour
 
     public void SpawnMole()
     {
-        Instantiate(molePrefab, GenerateSpawnPosition(), molePrefab.transform.rotation);
+        int randomMole = Random.Range(0, molePrefab.Length);
+
+        Instantiate(molePrefab[randomMole], GenerateSpawnPosition(), molePrefab[randomMole].transform.rotation);
     }
 
     // Update is called once per frame
